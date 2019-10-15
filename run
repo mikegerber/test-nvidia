@@ -1,0 +1,5 @@
+#!/bin/sh
+virtualenv -p /usr/bin/python3 ~/.virtualenvs/test-nvidia
+. ~/.virtualenvs/test-nvidia/bin/activate
+pip3 install -r requirements.txt
+python3 test-nvidia

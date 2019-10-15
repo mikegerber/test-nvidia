@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+import os
+import tensorflow as tf
+
+
+os.system('nvidia-smi')
+
+
+hello = tf.constant('Hello, TensorFlow!')
+sess = tf.compat.v1.Session()
+print(sess.run(hello))
+print('GPU available:', tf.test.is_gpu_available(cuda_only=True))
+
