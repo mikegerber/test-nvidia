@@ -1,0 +1,23 @@
+#!/bin/sh
+for version in "1.15.*" "2.1.*"; do
+  for requirement in "tensorflow==$version" "tensorflow-gpu==$version"; do
+    for CUDA_VISIBLE_DEVICES in "0" ""; do
+
+      echo "== $requirement, CUDA_VISIBLE_DEVICES='$CUDA_VISIBLE_DEVICES'"
+
+      export CUDA_VISIBLE_DEVICES
+
+      venv=`mktemp -d /tmp/test-nvidia.XXXXX`
+      virtualenv --quiet -p /usr/bin/python3 $venv
+      . $venv/bin/activate
+
+      pip3 install --quiet --upgrade pip
+      pip3 install --quiet "$requirement"
+
+      python3 -c 'import tensorflow as tf; print("GPU available:", tf.test.is_gpu_available())'
+
+      deactivate
+      rm --preserve-root -rf "$venv/"
+    done
+  done
+done
