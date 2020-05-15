@@ -8,4 +8,5 @@ virtualenv -p /usr/bin/python3 $vdir
 pip3 install -r requirements.txt
 python3 test-nvidia
 
-rm -rf $vdir
+deactivate
+rm --preserve-root -rf $vdir
