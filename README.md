@@ -1,5 +1,5 @@
-Test Nvidia environment in relation to TensorFlow
-=================================================
+Test Nvidia CUDA environment in relation to TensorFlow
+======================================================
 
 * `./run` tests the native system. One of tf1 or tf2 is expected to have no
   GPU available due to CUDA library incompatibility
