@@ -1,3 +1,14 @@
 #!/bin/sh
-docker build -t test-nvidia `dirname $0`
-docker run --gpus all -it --rm test-nvidia
+set -e
+
+for tf in tf1 tf2; do
+  echo "== $tf"
+  case "$tf" in
+    tf1) BASE_IMAGE=nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04;;
+    tf2) BASE_IMAGE=nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04;;
+  esac
+  work_dir=`dirname $0`
+  image_id=`docker build -q --build-arg tf=$tf --build-arg BASE_IMAGE=$BASE_IMAGE -f assets/Dockerfile $work_dir`
+  docker run --gpus all -it --rm $image_id
+  docker rmi $image_id >/dev/null || true
+done

@@ -1,12 +1,16 @@
 #!/bin/sh
 
-vdir=`mktemp -d /tmp/test-nvidia.XXXXXX`
+for tf in tf1 tf2; do
+  echo "== $tf"
+  vdir=`mktemp -d /tmp/test-nvidia.XXXXXX`
 
-virtualenv -p /usr/bin/python3 $vdir
-. $vdir/bin/activate
+  # Need Python 3.7 here as TF1 does not support 3.8
+  virtualenv -q -p /usr/bin/python3.7 $vdir >/dev/null
+  . $vdir/bin/activate
 
-pip3 install -r requirements.txt
-python3 test-nvidia
+  pip install -q -r assets/requirements-$tf.txt
+  python3 test-nvidia
 
-deactivate
-rm --preserve-root -rf $vdir
+  deactivate
+  rm --preserve-root -rf $vdir
+done

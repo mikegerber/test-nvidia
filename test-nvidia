@@ -1,13 +1,21 @@
 #!/usr/bin/python3
 import os
+
+
+os.system('nvidia-smi -L')
+
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'  # '1' means >= WARN
 import tensorflow as tf
+print('TensorFlow', tf.__version__)
+with tf.compat.v1.Session() as sess:
+    hello = tf.constant('Hello, TensorFlow!')
+    result = sess.run(hello)
+    #print(result)
 
-
-os.system('nvidia-smi')
-
-
-hello = tf.constant('Hello, TensorFlow!')
-sess = tf.compat.v1.Session()
-print(sess.run(hello))
-print('GPU available:', tf.test.is_gpu_available(cuda_only=True))
-
+if hasattr(tf.config, 'list_physical_devices'):
+    # TensorFlow 2
+    is_gpu_available = len(tf.config.list_physical_devices('GPU')) > 0
+    print('GPU available:', is_gpu_available)
+else:
+    print('GPU available:', tf.test.is_gpu_available(cuda_only=True))
