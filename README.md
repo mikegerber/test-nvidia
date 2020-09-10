@@ -5,6 +5,8 @@ Test Nvidia CUDA environment in relation to TensorFlow
   GPU available due to CUDA library incompatibility
 * `./run-docker` tests Docker support. Both TensorFlow versions should work
   as we're using a base image compatible to the respective version.
+* `./run-docker-compatibility-matrix` tests combinations of (pip-installable)
+  TensorFlow versions and `nvidia/cuda` images.
 
 
 Example output
