@@ -22,3 +22,13 @@ GPU 0: GeForce RTX 2080 (UUID: GPU-612ce75c-1340-772b-039c-2a83a3ea5c95)
 TensorFlow 2.3.0
 GPU available: True
 ~~~
+
+Results
+=======
+As of 2020-09, the only combinations that are working:
+
+* TensorFlow 1.15.3 using CUDA Toolkit 10.0
+* TensorFlow 2.3.0 using CUDA Toolkit 10.1
+
+This is only for pip-installable TensorFlow, not self-compiled nor Anaconda.
+We also did not test other TensorFlow versions.
