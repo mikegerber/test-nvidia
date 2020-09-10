@@ -31,4 +31,6 @@ As of 2020-09, the only combinations that are working:
 * TensorFlow 2.3.0 using CUDA Toolkit 10.1
 
 This is only for pip-installable TensorFlow, not self-compiled nor Anaconda.
-We also did not test other TensorFlow versions.
+We also did not test other TensorFlow versions. Note that these are the
+CUDA *Toolkit* versions, not the CUDA version the driver supports (reported
+by `nvidia-smi`).
