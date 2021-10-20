@@ -13,13 +13,21 @@ Example output
 ==============
 ~~~
 % ./run-docker
-== tf1
-GPU 0: GeForce RTX 2080 (UUID: GPU-612ce75c-1340-772b-039c-2a83a3ea5c95)
-TensorFlow 1.15.3
+== tensorflow-gpu 1.15 nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04
+GPU 0: NVIDIA GeForce RTX 2080 (UUID: GPU-612ce75c-1340-772b-039c-2a83a3ea5c95)
+TensorFlow 1.15.0
 GPU available: True
-== tf2
-GPU 0: GeForce RTX 2080 (UUID: GPU-612ce75c-1340-772b-039c-2a83a3ea5c95)
-TensorFlow 2.3.0
+== tensorflow 2.4.3 nvidia/cuda:11.0-cudnn8-runtime-ubuntu18.04
+GPU 0: NVIDIA GeForce RTX 2080 (UUID: GPU-612ce75c-1340-772b-039c-2a83a3ea5c95)
+TensorFlow 2.4.3
+GPU available: True
+== tensorflow 2.5.1 nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu18.04
+GPU 0: NVIDIA GeForce RTX 2080 (UUID: GPU-612ce75c-1340-772b-039c-2a83a3ea5c95)
+TensorFlow 2.5.1
+GPU available: True
+== tensorflow 2.6.0 nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu18.04
+GPU 0: NVIDIA GeForce RTX 2080 (UUID: GPU-612ce75c-1340-772b-039c-2a83a3ea5c95)
+TensorFlow 2.6.0
 GPU available: True
 ~~~
 
