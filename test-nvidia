@@ -1,14 +1,24 @@
 #!/usr/bin/python3
 import os
+import argparse
 
 
-os.system('nvidia-smi -L')
+parser = argparse.ArgumentParser(description="Test if GPU is available in TensorFlow")
+parser.add_argument('--quiet', dest='quiet', action='store_true')
+parser.set_defaults(quiet=False)
+
+args = parser.parse_args()
+
+
+if not args.quiet:
+    os.system('nvidia-smi -L')
 
 
 if not 'TF_CPP_MIN_LOG_LEVEL' in os.environ:
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'  # '1' means >= WARN
 import tensorflow as tf
-print('TensorFlow', tf.__version__)
+if not args.quiet:
+    print('TensorFlow', tf.__version__)
 with tf.compat.v1.Session() as sess:
     hello = tf.constant('Hello, TensorFlow!')
     result = sess.run(hello)
@@ -17,6 +27,12 @@ with tf.compat.v1.Session() as sess:
 if hasattr(tf.config, 'list_physical_devices'):
     # TensorFlow 2
     is_gpu_available = len(tf.config.list_physical_devices('GPU')) > 0
-    print('GPU available:', is_gpu_available)
+    if not args.quiet:
+        print('GPU available:', is_gpu_available)
+    else:
+        print(is_gpu_available)
 else:
-    print('GPU available:', tf.test.is_gpu_available(cuda_only=True))
+    if not args.quiet:
+        print('GPU available:', tf.test.is_gpu_available(cuda_only=True))
+    else:
+        print(tf.test.is_gpu_available(cuda_only=True))

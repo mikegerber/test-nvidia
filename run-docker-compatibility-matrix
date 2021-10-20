@@ -1,17 +1,29 @@
 #!/bin/sh
 set -e
 
-for tf in tf1 tf2; do
+for tensorflow_version in 1.15 2.4.3 2.5.1 2.6.0; do
   #  Note: CUDA 11.0 only with CUDNN 8
   for BASE_IMAGE in \
     nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04 \
     nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04 \
     nvidia/cuda:10.2-cudnn7-runtime-ubuntu18.04 \
     nvidia/cuda:11.0-cudnn8-runtime-ubuntu18.04 \
+    nvidia/cuda:11.1-cudnn8-runtime-ubuntu18.04 \
+    nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu18.04 \
   ; do
-    echo "== $tf $BASE_IMAGE"
+
+    # According to the docs at https://www.tensorflow.org/install/gpu, we should
+    # use different package names depending on the major version of TF.
+    if echo $tensorflow_version | grep -q ^1; then
+      tensorflow_package=tensorflow-gpu
+    else
+      tensorflow_package=tensorflow
+    fi
+
+
+    echo -n "$tensorflow_package $tensorflow_version $BASE_IMAGE "
     work_dir=`dirname $0`
-    image_id=`docker build -q --build-arg tf=$tf --build-arg BASE_IMAGE=$BASE_IMAGE -f assets/Dockerfile $work_dir`
+    image_id=`docker build -q --build-arg test_nvidia_options="--quiet" --build-arg tensorflow_package=$tensorflow_package --build-arg tensorflow_version=$tensorflow_version --build-arg BASE_IMAGE=$BASE_IMAGE -f assets/Dockerfile $work_dir`
     docker run --gpus all -it --rm -e TF_CPP_MIN_LOG_LEVEL=2 $image_id
     docker rmi $image_id >/dev/null || true
   done
